@@ -77,10 +77,12 @@ public final class Multisets {
    *
    * <p>To collect to an {@link ImmutableMultiset}, use {@link
    * ImmutableMultiset#toImmutableMultiset}.
+   *
+   * @since 33.2.0 (available since 22.0 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <T extends @Nullable Object, E extends @Nullable Object, M extends Multiset<E>>
+  public static <T extends @Nullable Object, E extends @Nullable Object, M extends Multiset<E>>
       Collector<T, ?, M> toMultiset(
           Function<? super T, E> elementFunction,
           ToIntFunction<? super T> countFunction,

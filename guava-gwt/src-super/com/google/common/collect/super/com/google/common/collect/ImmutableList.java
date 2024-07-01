@@ -54,8 +54,8 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
     return (ImmutableList<E>) RegularImmutableList.EMPTY;
   }
 
-  public static <E> ImmutableList<E> of(E element) {
-    return new SingletonImmutableList<E>(checkNotNull(element));
+  public static <E> ImmutableList<E> of(E e1) {
+    return new SingletonImmutableList<E>(checkNotNull(e1));
   }
 
   public static <E> ImmutableList<E> of(E e1, E e2) {
@@ -351,6 +351,11 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
 
     @Override
     public ImmutableList<E> build() {
+      return copyOf(contents);
+    }
+
+    ImmutableList<E> buildSorted(Comparator<? super E> comparator) {
+      Collections.sort(contents, comparator);
       return copyOf(contents);
     }
   }

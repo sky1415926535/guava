@@ -144,10 +144,12 @@ public final class Sets {
    * Returns a {@code Collector} that accumulates the input elements into a new {@code ImmutableSet}
    * with an implementation specialized for enums. Unlike {@link ImmutableSet#toImmutableSet}, the
    * resulting set will iterate over elements in their enum definition order, not encounter order.
+   *
+   * @since 33.2.0 (available since 21.0 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <E extends Enum<E>> Collector<E, ?, ImmutableSet<E>> toImmutableEnumSet() {
+  public static <E extends Enum<E>> Collector<E, ?, ImmutableSet<E>> toImmutableEnumSet() {
     return CollectCollectors.toImmutableEnumSet();
   }
 
@@ -1921,6 +1923,7 @@ public final class Sets {
    * @since 13.0
    */
   @GwtIncompatible // NavigableSet
+  @J2ktIncompatible // Synchronized
   public static <E extends @Nullable Object> NavigableSet<E> synchronizedNavigableSet(
       NavigableSet<E> navigableSet) {
     return Synchronized.navigableSet(navigableSet);

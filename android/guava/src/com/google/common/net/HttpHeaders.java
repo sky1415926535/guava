@@ -626,7 +626,7 @@ public final class HttpHeaders {
    * href="https://w3c.github.io/webappsec-permissions-policy/#permissions-policy-report-only-http-header-field">{@code
    * Permissions-Policy-Report-Only}</a> header field name.
    *
-   * @since NEXT
+   * @since 33.2.0
    */
   public static final String PERMISSIONS_POLICY_REPORT_ONLY = "Permissions-Policy-Report-Only";
 
@@ -729,13 +729,24 @@ public final class HttpHeaders {
    * @since 31.0
    */
   public static final String SEC_CH_UA_BITNESS = "Sec-CH-UA-Bitness";
+
   /**
    * The HTTP <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-form-factor">{@code
    * Sec-CH-UA-Form-Factor}</a> header field name.
    *
+   * @deprecated Prefer {@link SEC_CH_UA_FORM_FACTORS}.
    * @since 32.0.0
    */
-  public static final String SEC_CH_UA_FORM_FACTOR = "Sec-CH-UA-Form-Factor";
+  @Deprecated public static final String SEC_CH_UA_FORM_FACTOR = "Sec-CH-UA-Form-Factor";
+
+  /**
+   * The HTTP <a href="https://wicg.github.io/ua-client-hints/#sec-ch-ua-form-factors">{@code
+   * Sec-CH-UA-Form-Factors}</a> header field name.
+   *
+   * @since NEXT
+   */
+  public static final String SEC_CH_UA_FORM_FACTORS = "Sec-CH-UA-Form-Factors";
+
   /**
    * The HTTP <a
    * href="https://wicg.github.io/responsive-image-client-hints/#sec-ch-viewport-width">{@code
@@ -876,6 +887,15 @@ public final class HttpHeaders {
 
   /**
    * The HTTP <a
+   * href="https://privacycg.github.io/gpc-spec/#the-sec-gpc-header-field-for-http-requests">{@code
+   * Sec-GPC}</a> header field name.
+   *
+   * @since 33.2.0
+   */
+  public static final String SEC_GPC = "Sec-GPC";
+
+  /**
+   * The HTTP <a
    * href="https://wicg.github.io/turtledove/#handling-direct-from-seller-signals">{@code
    * Ad-Auction-Signals}</a> header field name.
    *
@@ -887,7 +907,7 @@ public final class HttpHeaders {
    * The HTTP <a href="https://wicg.github.io/turtledove/#http-headerdef-ad-auction-allowed">{@code
    * Ad-Auction-Allowed}</a> header field name.
    *
-   * @since NEXT
+   * @since 33.2.0
    */
   public static final String AD_AUCTION_ALLOWED = "Ad-Auction-Allowed";
 

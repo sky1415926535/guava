@@ -19,6 +19,7 @@ import com.google.common.annotations.GwtIncompatible;
 import com.google.common.annotations.J2ktIncompatible;
 import com.google.common.base.Preconditions;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import java.time.Duration;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Deque;
@@ -290,7 +291,7 @@ public final class Queues {
   @J2ktIncompatible
   @GwtIncompatible // BlockingQueue
   public static <E> int drain(
-      BlockingQueue<E> q, Collection<? super E> buffer, int numElements, java.time.Duration timeout)
+      BlockingQueue<E> q, Collection<? super E> buffer, int numElements, Duration timeout)
       throws InterruptedException {
     // TODO(b/126049426): Consider using saturateToNanos(timeout) instead.
     return drain(q, buffer, numElements, timeout.toNanos(), TimeUnit.NANOSECONDS);
@@ -360,10 +361,7 @@ public final class Queues {
   @J2ktIncompatible
   @GwtIncompatible // BlockingQueue
   public static <E> int drainUninterruptibly(
-      BlockingQueue<E> q,
-      Collection<? super E> buffer,
-      int numElements,
-      java.time.Duration timeout) {
+      BlockingQueue<E> q, Collection<? super E> buffer, int numElements, Duration timeout) {
     // TODO(b/126049426): Consider using saturateToNanos(timeout) instead.
     return drainUninterruptibly(q, buffer, numElements, timeout.toNanos(), TimeUnit.NANOSECONDS);
   }
@@ -454,6 +452,7 @@ public final class Queues {
    * @return a synchronized view of the specified queue
    * @since 14.0
    */
+  @J2ktIncompatible // Synchronized
   public static <E extends @Nullable Object> Queue<E> synchronizedQueue(Queue<E> queue) {
     return Synchronized.queue(queue, null);
   }
@@ -487,6 +486,7 @@ public final class Queues {
    * @return a synchronized view of the specified deque
    * @since 15.0
    */
+  @J2ktIncompatible // Synchronized
   public static <E extends @Nullable Object> Deque<E> synchronizedDeque(Deque<E> deque) {
     return Synchronized.deque(deque, null);
   }

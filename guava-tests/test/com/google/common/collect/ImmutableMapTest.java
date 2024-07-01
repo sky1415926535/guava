@@ -290,6 +290,16 @@ public class ImmutableMapTest extends TestCase {
   }
 
   @GwtIncompatible // we haven't implemented this
+  public void testBuilder_orderEntriesByValueAfterExactSizeBuild_keepingLastWithoutDuplicates() {
+    ImmutableMap.Builder<String, Integer> builder =
+        new Builder<String, Integer>(3)
+            .orderEntriesByValue(Ordering.natural())
+            .put("three", 3)
+            .put("one", 1);
+    assertMapEquals(builder.buildKeepingLast(), "one", 1, "three", 3);
+  }
+
+  @GwtIncompatible // we haven't implemented this
   public void testBuilder_orderEntriesByValue_keepingLast_builderSizeFieldPreserved() {
     ImmutableMap.Builder<String, Integer> builder =
         new Builder<String, Integer>()
@@ -908,7 +918,6 @@ public class ImmutableMapTest extends TestCase {
 
   @J2ktIncompatible
   @GwtIncompatible // NullPointerTester
-  @AndroidIncompatible // see ImmutableTableTest.testNullPointerInstance
   public void testNullPointers() {
     NullPointerTester tester = new NullPointerTester();
     tester.testAllPublicStaticMethods(ImmutableMap.class);

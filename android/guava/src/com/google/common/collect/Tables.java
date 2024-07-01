@@ -21,6 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.NullnessCasts.uncheckedCastNullableTToT;
 
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.annotations.J2ktIncompatible;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Supplier;
@@ -62,10 +63,12 @@ public final class Tables {
    * is thrown when the collection operation is performed.
    *
    * <p>To collect to an {@link ImmutableTable}, use {@link ImmutableTable#toImmutableTable}.
+   *
+   * @since 33.2.0 (available since 21.0 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <
+  public static <
           T extends @Nullable Object,
           R extends @Nullable Object,
           C extends @Nullable Object,
@@ -91,10 +94,12 @@ public final class Tables {
    * BinaryOperator, java.util.function.Supplier)}, this Collector throws a {@code
    * NullPointerException} on null values returned from {@code valueFunction}, and treats nulls
    * returned from {@code mergeFunction} as removals of that row/column pair.
+   *
+   * @since 33.2.0 (available since 21.0 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <
+  public static <
           T extends @Nullable Object,
           R extends @Nullable Object,
           C extends @Nullable Object,
@@ -726,6 +731,7 @@ public final class Tables {
    * @return a synchronized view of the specified table
    * @since 22.0
    */
+  @J2ktIncompatible // Synchronized
   public static <R extends @Nullable Object, C extends @Nullable Object, V extends @Nullable Object>
       Table<R, C, V> synchronizedTable(Table<R, C, V> table) {
     return Synchronized.table(table, null);

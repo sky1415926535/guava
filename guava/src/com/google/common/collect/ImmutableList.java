@@ -95,10 +95,10 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
    * comparably to {@link Collections#singletonList}, but will not accept a null element. It is
    * preferable mainly for consistency and maintainability of your code.
    *
-   * @throws NullPointerException if {@code element} is null
+   * @throws NullPointerException if the element is null
    */
-  public static <E> ImmutableList<E> of(E element) {
-    return new SingletonImmutableList<>(element);
+  public static <E> ImmutableList<E> of(E e1) {
+    return new SingletonImmutableList<>(e1);
   }
 
   /**
@@ -924,6 +924,21 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
     @Override
     public ImmutableList<E> build() {
       forceCopy = true;
+      return asImmutableList(contents, size);
+    }
+
+    /**
+     * Returns a newly-created {@code ImmutableList} based on the contents of the {@code Builder},
+     * sorted according to the specified comparator.
+     */
+    @SuppressWarnings("unchecked")
+    ImmutableList<E> buildSorted(Comparator<? super E> comparator) {
+      // Currently only used by ImmutableListMultimap.Builder.orderValuesBy.
+      // In particular, this implies that the comparator can never get "removed," so this can't
+      // invalidate future builds.
+
+      forceCopy = true;
+      Arrays.sort((E[]) contents, 0, size, comparator);
       return asImmutableList(contents, size);
     }
   }

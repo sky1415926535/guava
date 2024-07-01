@@ -78,10 +78,12 @@ public class ImmutableListMultimap<K, V> extends ImmutableMultimap<K, V>
    *         .putAll('c', "arrot", "herry")
    *         .build();
    * }</pre>
+   *
+   * @since 33.2.0 (available since 21.0 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <T extends @Nullable Object, K, V>
+  public static <T extends @Nullable Object, K, V>
       Collector<T, ?, ImmutableListMultimap<K, V>> toImmutableListMultimap(
           Function<? super T, ? extends K> keyFunction,
           Function<? super T, ? extends V> valueFunction) {
@@ -116,10 +118,12 @@ public class ImmutableListMultimap<K, V> extends ImmutableMultimap<K, V>
    *         .build();
    * }
    * }</pre>
+   *
+   * @since 33.2.0 (available since 21.0 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <T extends @Nullable Object, K, V>
+  public static <T extends @Nullable Object, K, V>
       Collector<T, ?, ImmutableListMultimap<K, V>> flatteningToImmutableListMultimap(
           Function<? super T, ? extends K> keyFunction,
           Function<? super T, ? extends Stream<? extends V>> valuesFunction) {
@@ -374,6 +378,29 @@ public class ImmutableListMultimap<K, V> extends ImmutableMultimap<K, V>
         builder.put(key, list);
         size += list.size();
       }
+    }
+
+    return new ImmutableListMultimap<>(builder.buildOrThrow(), size);
+  }
+
+  /** Creates an ImmutableListMultimap from an asMap.entrySet. */
+  static <K, V> ImmutableListMultimap<K, V> fromMapBuilderEntries(
+      Collection<? extends Map.Entry<K, ImmutableCollection.Builder<V>>> mapEntries,
+      @CheckForNull Comparator<? super V> valueComparator) {
+    if (mapEntries.isEmpty()) {
+      return of();
+    }
+    ImmutableMap.Builder<K, ImmutableList<V>> builder =
+        new ImmutableMap.Builder<>(mapEntries.size());
+    int size = 0;
+
+    for (Entry<K, ImmutableCollection.Builder<V>> entry : mapEntries) {
+      K key = entry.getKey();
+      ImmutableList.Builder<V> values = (ImmutableList.Builder<V>) entry.getValue();
+      ImmutableList<V> list =
+          (valueComparator == null) ? values.build() : values.buildSorted(valueComparator);
+      builder.put(key, list);
+      size += list.size();
     }
 
     return new ImmutableListMultimap<>(builder.buildOrThrow(), size);

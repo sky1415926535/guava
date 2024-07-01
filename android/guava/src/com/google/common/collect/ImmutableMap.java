@@ -79,12 +79,15 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * IllegalArgumentException} is thrown when the collection operation is performed. (This differs
    * from the {@code Collector} returned by {@link Collectors#toMap(Function, Function)}, which
    * throws an {@code IllegalStateException}.)
+   *
+   * @since 33.2.0 (available since 21.0 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <T extends @Nullable Object, K, V> Collector<T, ?, ImmutableMap<K, V>> toImmutableMap(
-      Function<? super T, ? extends K> keyFunction,
-      Function<? super T, ? extends V> valueFunction) {
+  public static <T extends @Nullable Object, K, V>
+      Collector<T, ?, ImmutableMap<K, V>> toImmutableMap(
+          Function<? super T, ? extends K> keyFunction,
+          Function<? super T, ? extends V> valueFunction) {
     return CollectCollectors.toImmutableMap(keyFunction, valueFunction);
   }
 
@@ -98,13 +101,16 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * future occurrences of the key would reinsert it).
    *
    * <p>Entries will appear in the encounter order of the first occurrence of the key.
+   *
+   * @since 33.2.0 (available since 21.0 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <T extends @Nullable Object, K, V> Collector<T, ?, ImmutableMap<K, V>> toImmutableMap(
-      Function<? super T, ? extends K> keyFunction,
-      Function<? super T, ? extends V> valueFunction,
-      BinaryOperator<V> mergeFunction) {
+  public static <T extends @Nullable Object, K, V>
+      Collector<T, ?, ImmutableMap<K, V>> toImmutableMap(
+          Function<? super T, ? extends K> keyFunction,
+          Function<? super T, ? extends V> valueFunction,
+          BinaryOperator<V> mergeFunction) {
     return CollectCollectors.toImmutableMap(keyFunction, valueFunction, mergeFunction);
   }
 

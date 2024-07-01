@@ -64,10 +64,12 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
    * Returns a {@code Collector} that accumulates the input elements into a new {@code
    * ImmutableRangeSet}. As in {@link Builder}, overlapping ranges are not permitted and adjacent
    * ranges will be merged.
+   *
+   * @since 33.2.0 (available since 23.1 in guava-jre)
    */
   @SuppressWarnings({"AndroidJdkLibsChecker", "Java7ApiChecker"})
   @IgnoreJRERequirement // Users will use this only if they're already using streams.
-  static <E extends Comparable<? super E>>
+  public static <E extends Comparable<? super E>>
       Collector<Range<E>, ?, ImmutableRangeSet<E>> toImmutableRangeSet() {
     return CollectCollectors.toImmutableRangeSet();
   }
